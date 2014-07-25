@@ -41,6 +41,33 @@ For every location update, a JSON encoded `POST` request with the following form
 }
 ```
 
+## Passing additional parameters ##
+
+If you need to pass additional parameters along with the POST request, do it like this:
+
+```
+window.plugins.atalandaGPSTracker.startTracking({
+  myValues: [1,2,3,4,5]
+});
+```
+
+The resulting JSON that gets posted looks like this:
+
+```
+{
+  "latitude": 47.80668,
+  "longitude": 13.04949,
+  "horizontalAccuracy": 65, // lat/lng identifies the center of a circle with a radius of 65 meters
+  "altitude": 436.3852, // altitude measured in meters
+  "verticalAccuracy": 10, // accuracy of altitude in meters
+  "velocity": -1, // speed in m/s, negative value indicates an invalid speed
+  "timestamp": "2014-07-25 12:22:04:0004", // time when the location was tracked
+  "batteryLevel": 0.95, // between 0..1
+
+  "myValues": [1,2,3,4,5] // additional parameters
+}
+```
+
 ## Platform specific hints ##
 
 ### iOS ###

@@ -6,16 +6,14 @@ module.exports = {
       'configure',
       [config]);
   },
-  startTracking: function(success, failure, config) {
-    exec(success || function() {},
-      failure || function() {},
+  startTracking: function(params) {
+    exec(function() {}, function() {},
       'atalandaGPSTracker',
       'startTracking',
-      []);
+      [params]);
   },
-  stopTracking: function(success, failure, config) {
-    exec(success || function() {},
-      failure || function() {},
+  stopTracking: function(success, failure) {
+    exec(function() {}, function() {},
       'atalandaGPSTracker',
       'stopTracking',
       []);

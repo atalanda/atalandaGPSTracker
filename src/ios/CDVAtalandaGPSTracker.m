@@ -16,6 +16,7 @@
     CLLocationManager *locationManager;
     BOOL configSet;
     NSString *url;
+    NSDictionary *params; // additional params that can change on each startTracking and are sent with every POST request
     // counter to first get high accuracy results
     NSInteger receivedLocationUpdates;
 }
@@ -53,6 +54,9 @@
       NSLog(@"Already tracking! Can't start again");
       return;
     }
+
+    // read and store additional params from javascript object
+    params = [command.arguments objectAtIndex:0];
 
     // start monitoring battery
     [[UIDevice currentDevice] setBatteryMonitoringEnabled:YES];
@@ -154,30 +158,31 @@
     [dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
     NSString *timestamp = [dateFormatter stringFromDate:location.timestamp];
 
-    NSDictionary *geodata = @{
-                              @"latitude" : [NSNumber numberWithFloat:location.coordinate.latitude],
-                              @"longitude" : [NSNumber numberWithFloat:location.coordinate.longitude],
-                              @"horizontalAccuracy": [NSNumber numberWithFloat:location.horizontalAccuracy],
-                              @"altitude": [NSNumber numberWithFloat:location.altitude],
-                              @"verticalAccuracy": [NSNumber numberWithFloat:location.verticalAccuracy],
-                              @"velocity": [NSNumber numberWithFloat:location.speed],
-                              @"timestamp": timestamp,
-                              @"batteryLevel": [NSNumber numberWithFloat:batteryLevel]
-                              };
+    NSMutableDictionary *geodata = [[NSMutableDictionary alloc] init];
+    geodata[@"latitude"]            = [NSNumber numberWithFloat:location.coordinate.latitude];
+    geodata[@"latitude"]            = [NSNumber numberWithFloat:location.coordinate.latitude];
+    geodata[@"longitude"]           = [NSNumber numberWithFloat:location.coordinate.longitude];
+    geodata[@"horizontalAccuracy"]  = [NSNumber numberWithFloat:location.horizontalAccuracy];
+    geodata[@"altitude"]            = [NSNumber numberWithFloat:location.altitude];
+    geodata[@"verticalAccuracy"]    = [NSNumber numberWithFloat:location.verticalAccuracy];
+    geodata[@"velocity"]            = [NSNumber numberWithFloat:location.speed];
+    geodata[@"timestamp"]           = timestamp;
+    geodata[@"batteryLevel"]        = [NSNumber numberWithFloat:batteryLevel];
+
+    // merge the params dictionary
+    [geodata addEntriesFromDictionary:params];
 
     NSError * err;
     NSData * jsonData = [NSJSONSerialization dataWithJSONObject:geodata options:0 error:&err];
-    NSString * myString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-
+    NSString * jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     NSMutableURLRequest *postRequest = [NSMutableURLRequest requestWithURL: [NSURL URLWithString:url]];
     postRequest.HTTPMethod = @"POST";
     [postRequest setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    postRequest.HTTPBody = [myString dataUsingEncoding: NSUTF8StringEncoding];
+    postRequest.HTTPBody = [jsonString dataUsingEncoding: NSUTF8StringEncoding];
     [NSURLConnection sendAsynchronousRequest:postRequest queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
                                NSLog(@"REQUEST SENT TO SERVER!");
                            }];
 }
-
 
 @end
