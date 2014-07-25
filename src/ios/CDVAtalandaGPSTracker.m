@@ -180,7 +180,13 @@
     postRequest.HTTPBody = [jsonString dataUsingEncoding: NSUTF8StringEncoding];
     [NSURLConnection sendAsynchronousRequest:postRequest queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                               NSLog(@"REQUEST SENT TO SERVER!");
+                               if(error) {
+                                 NSLog(@"Httperror: %@, %d", error.localizedDescription, error.code);
+                               } else {
+                                  NSInteger responseCode = [(NSHTTPURLResponse *)response statusCode];
+                                  NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                                  NSLog(@"REQUEST SENT TO SERVER! HTTP response code: %d; response body: %@", responseCode, responseString);
+                               }
                            }];
 }
 
