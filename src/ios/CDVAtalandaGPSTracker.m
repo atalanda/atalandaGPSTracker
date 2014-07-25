@@ -160,7 +160,6 @@
 
     NSMutableDictionary *geodata = [[NSMutableDictionary alloc] init];
     geodata[@"latitude"]            = [NSNumber numberWithFloat:location.coordinate.latitude];
-    geodata[@"latitude"]            = [NSNumber numberWithFloat:location.coordinate.latitude];
     geodata[@"longitude"]           = [NSNumber numberWithFloat:location.coordinate.longitude];
     geodata[@"horizontalAccuracy"]  = [NSNumber numberWithFloat:location.horizontalAccuracy];
     geodata[@"altitude"]            = [NSNumber numberWithFloat:location.altitude];
