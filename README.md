@@ -15,7 +15,7 @@ cordova plugin add https://github.com/atalanda/atalandaGPSTracker
 Before tracking can be started, you must provide a configuration:
 
 ```
-window.plugins.atalandaGPSTracker.config({
+window.plugins.atalandaGPSTracker.configure({
   url: "http://yourdomain.com/yourcallback"
 });
 ```

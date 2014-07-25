@@ -1,6 +1,6 @@
 var exec = require("cordova/exec");
 module.exports = {
-  config: function(config) {
+  configure: function(config) {
     exec(function() {}, function() {},
       'atalandaGPSTracker',
       'configure',
