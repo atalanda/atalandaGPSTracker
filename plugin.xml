@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="com.atalanda.gpstracker" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>atalandaGPSTracker</name>
+    <description>Cordova plugin for fore- and background GPS tracking</description>
+    <license>MIT</license>
+
+    <engines>
+      <engine name="cordova" version=">=3.4.0" />
+    </engines>
+
+    <js-module name="atalandaGPSTracker" src="www/atalandaGPSTracker.js">
+        <clobbers target="plugins.atalandaGPSTracker" />
+    </js-module>
+
+    <platform name="ios">
+      <!-- required background modes:  App registers for location updates -->
+      <config-file target="*-Info.plist" parent="UIBackgroundModes">
+        <array>
+          <string>location</string>
+        </array>
+      </config-file>
+
+      <config-file target="config.xml" parent="/*">
+        <feature name="atalandaGPSTracker">
+          <param name="ios-package" value="CDVAtalandaGPSTracker"/>
+        </feature>
+      </config-file>
+
+      <framework src="CoreLocation.framework" />
+      <header-file src="src/ios/CDVAtalandaGPSTracker.h" />
+      <source-file src="src/ios/CDVAtalandaGPSTracker.m" />
+    </platform>
+</plugin>
