@@ -30,4 +30,39 @@
       <header-file src="src/ios/CDVAtalandaGPSTracker.h" />
       <source-file src="src/ios/CDVAtalandaGPSTracker.m" />
     </platform>
+
+    <platform name="android">
+        <source-file src="src/android/atalandaGPSTracker.java" target-dir="src/com/atalanda/gpstracker" />
+        <source-file src="src/android/LocationCache.java" target-dir="src/com/atalanda/gpstracker" />
+        <source-file src="src/android/asyncTasks/LocationUploadTask.java" target-dir="src/com/atalanda/gpstracker/asyncTasks" />
+        <source-file src="src/android/receivers/LocationReceiver.java" target-dir="src/com/atalanda/gpstracker/receivers" />
+        <source-file src="src/android/services/TrackingService.java" target-dir="src/com/atalanda/gpstracker/services" />
+
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+            <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+            <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+            <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+            <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="android.permission.WAKE_LOCK" />
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <receiver android:name="com.atalanda.gpstracker.receivers.LocationReceiver" />
+            <service android:name="com.atalanda.gpstracker.services.TrackingService" />
+            <service android:name="com.atalanda.gpstracker.services.OnBootService">
+              <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <category android:name="android.intent.category.HOME" />
+              </intent-filter>
+            </service>
+        </config-file>
+
+        <config-file target="res/xml/config.xml" parent="/*">
+          <feature name="atalandaGPSTracker">
+            <param name="android-package" value="com.atalanda.gpstracker.atalandaGPSTracker"/>
+            <param name="onload" value="true" />
+          </feature>
+        </config-file>
+     </platform>
 </plugin>

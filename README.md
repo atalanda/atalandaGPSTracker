@@ -85,7 +85,7 @@ Only tested with iOS 7.1. Foreground will work, but background tracking changed 
 
 ### Android ###
 
-Not implemented yet.
+Android provides no vertical Accuracy.
 
 ## License ##
 The MIT License (MIT)

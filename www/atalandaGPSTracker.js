@@ -1,19 +1,19 @@
 var exec = require("cordova/exec");
 module.exports = {
-  configure: function(config) {
-    exec(function() {}, function() {},
+  configure: function(config, success, error) {
+    exec(success, error,
       'atalandaGPSTracker',
       'configure',
       [config]);
   },
-  startTracking: function(params) {
-    exec(function() {}, function() {},
+  startTracking: function(params, success, error) {
+    exec(success, error,
       'atalandaGPSTracker',
       'startTracking',
       [params]);
   },
   stopTracking: function(success, failure) {
-    exec(function() {}, function() {},
+    exec(success, error,
       'atalandaGPSTracker',
       'stopTracking',
       []);
