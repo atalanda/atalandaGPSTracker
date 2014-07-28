@@ -12,7 +12,7 @@ module.exports = {
       'startTracking',
       [params]);
   },
-  stopTracking: function(success, failure) {
+  stopTracking: function(success, error) {
     exec(success, error,
       'atalandaGPSTracker',
       'stopTracking',
