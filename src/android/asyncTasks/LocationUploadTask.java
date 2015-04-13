@@ -62,7 +62,6 @@ public class LocationUploadTask extends AsyncTask<LocationCache, Integer, Boolea
 			httppost.setHeader("Content-type", "application/json");
 
 	    JSONObject body;
-			JSONObject additionalHeader;
 			try {
 					body = new JSONObject(locationCache.getParameters());
 			    body.put("verticalAccuracy", null);
@@ -74,10 +73,8 @@ public class LocationUploadTask extends AsyncTask<LocationCache, Integer, Boolea
 			    body.put("batteryLevel", locationCache.getBatteryLevel());
 			    body.put("timestamp", locationCache.getTimestamp());
 
-					additionalHeader = new JSONObject(body.remove("additionalHeader").toString());
-
 			    httppost.setEntity(new StringEntity(body.toString()));
-					httppost.addHeader(additionalHeader.get("key").toString(), additionalHeader.get("value").toString());
+					httppost.addHeader(locationCache.getAdditionalHeaderKey(), locationCache.getAdditionalHeaderValue());
 			} catch (JSONException | UnsupportedEncodingException e) {
 				Log.e("error encoding JSON", e.getMessage());
 				continue;

@@ -11,13 +11,17 @@ public class LocationCache {
 	private Location location;
 	private String parameters;
 	private String url;
+	private String additionalHeaderKey;
+	private String additionalHeaderValue;
 	private Float batteryLevel;
 	private String timestamp;
 
-	public LocationCache(Location location, String parameters, String url, Float batteryLevel) {
+	public LocationCache(Location location, String parameters, String url, Float batteryLevel, String additionalHeaderKey, String, additionalHeaderValue) {
 		this.setLocation(location);
 		this.setParameters(parameters);
 		this.setUrl(url);
+		this.setAdditionalHeaderKey(additionalHeaderKey);
+		this.setAdditionalHeaderValue(additionalHeaderValue);
 		this.setBatteryLevel(batteryLevel);
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
@@ -51,6 +55,22 @@ public class LocationCache {
 
 	public Float getBatteryLevel() {
 		return batteryLevel;
+	}
+
+	public void setAdditionalHeaderKey(Float additionalHeaderKey) {
+		this.additionalHeaderKey = additionalHeaderKey;
+	}
+
+	public Float getAdditionalHeaderKey() {
+		return additionalHeaderKey;
+	}
+
+	public void setAdditionalHeaderValue(Float additionalHeaderValue) {
+		this.additionalHeaderValue = additionalHeaderValue;
+	}
+
+	public Float getAdditionalHeaderValue() {
+		return additionalHeaderValue;
 	}
 
 	public void setBatteryLevel(Float batteryLevel) {

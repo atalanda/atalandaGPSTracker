@@ -6,6 +6,12 @@ module.exports = {
       'configure',
       [config]);
   },
+  setAdditionalHeader: function(params, success, error) {
+    exec(success, error,
+      'atalandaGPSTracker',
+      'setAdditionalHeader',
+      [params]);
+  },
   startTracking: function(params, success, error) {
     exec(success, error,
       'atalandaGPSTracker',

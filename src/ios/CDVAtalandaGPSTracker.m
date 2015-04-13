@@ -44,6 +44,18 @@
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
 }
 
+- (void) setAdditionalHeader:(CDVInvokedUrlCommand*)command
+{
+    NSDictionary *header = [command.arguments objectAtIndex:0];
+    additionalHeaderKey = header[@"key"];
+    additionalHeaderValue = header[@"value"];
+    NSLog(@"Additional header set");
+
+    CDVPluginResult* result = nil;
+    result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+}
+
 - (void)startTracking:(CDVInvokedUrlCommand*)command {
     if(!configSet) {
         NSException* noConfigurationException = [NSException exceptionWithName:@"ConfigurationNotSet"
@@ -59,9 +71,6 @@
 
     // read and store additional params from javascript object
     params = [command.arguments objectAtIndex:0];
-
-    additionalHeaderKey = params[@"additionalHeader"][@"key"];
-    additionalHeaderValue = params[@"additionalHeader"][@"value"];
 
     // start monitoring battery
     [[UIDevice currentDevice] setBatteryMonitoringEnabled:YES];

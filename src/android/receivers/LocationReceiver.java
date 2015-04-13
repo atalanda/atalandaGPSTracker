@@ -34,8 +34,10 @@ public class LocationReceiver extends BroadcastReceiver {
 			Location location = (Location)intent.getExtras().get(locationKey);
 			String parameters = intent.getStringExtra("parameters");
 			String url = intent.getStringExtra("url");
+			String additionalHeaderKey = intent.getStringExtra("additionalHeaderKey");
+			String additionalHeaderValue = intent.getStringExtra("additionalHeaderValue");
 			Float batteryLevel = getBatteryLevel(context.getApplicationContext());
-			locations.add(new LocationCache(location, parameters, url, batteryLevel));
+			locations.add(new LocationCache(location, parameters, url, batteryLevel, additionalHeaderKey, additionalHeaderValue));
 			Log.d("Atalanda", "Got Location Lat: "+location.getLatitude()+" Long: "+location.getLongitude());
 
 			ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

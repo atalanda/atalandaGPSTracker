@@ -17,6 +17,8 @@ import com.atalanda.gpstracker.services.TrackingService;
 public class atalandaGPSTracker extends CordovaPlugin {
     private Intent trackingServiceIntent;
     private String url = "";
+    private String additionalHeaderKey;
+    private String additionalHeaderValue;
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
@@ -37,6 +39,8 @@ public class atalandaGPSTracker extends CordovaPlugin {
       JSONObject parameters = data.getJSONObject(0);
       trackingServiceIntent.putExtra("parameters", parameters.toString());
       trackingServiceIntent.putExtra("url", url);
+      trackingServiceIntent.putExtra("additionalHeaderKey", additionalHeaderKey);
+      trackingServiceIntent.putExtra("additionalHeaderValue", additionalHeaderValue);
       activity.startService(trackingServiceIntent);
           callbackContext.success();
           result = true;
@@ -59,6 +63,19 @@ public class atalandaGPSTracker extends CordovaPlugin {
           result = true;
         } catch (JSONException e) {
           Log.e("error configuring plugin", e.getMessage());
+          callbackContext.error("Error: " + e.getMessage());
+          result = false;
+        }
+      }
+
+      if(action.equals("setAdditionalHeader")) {
+        try {
+          additionalHeaderKey = data.getJSONObject(0).getString("key");
+          additionalHeaderValue = data.getJSONObject(0).getString("value");
+          callbackContext.success();
+          result = true;
+        } catch (JSONException e) {
+          Log.e("error setAdditionalHeader plugin", e.getMessage());
           callbackContext.error("Error: " + e.getMessage());
           result = false;
         }
