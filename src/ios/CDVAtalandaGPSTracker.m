@@ -70,7 +70,9 @@
     }
 
     // read and store additional params from javascript object
-    params = [command.arguments objectAtIndex:0];
+    if([command.arguments objectAtIndex:0] != [NSNull null]) {
+        params = [command.arguments objectAtIndex:0];
+    }
 
     // start monitoring battery
     [[UIDevice currentDevice] setBatteryMonitoringEnabled:YES];
@@ -182,8 +184,10 @@
     geodata[@"timestamp"]           = timestamp;
     geodata[@"batteryLevel"]        = [NSNumber numberWithFloat:batteryLevel];
 
-    // merge the params dictionary
-    [geodata addEntriesFromDictionary:params];
+    if(params) {
+        // merge the params dictionary
+        [geodata addEntriesFromDictionary:params];
+    }
 
     NSError * err;
     NSData * jsonData = [NSJSONSerialization dataWithJSONObject:geodata options:0 error:&err];
