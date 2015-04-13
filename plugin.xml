@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="com.atalanda.gpstracker" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+<plugin id="com.atalanda.gpstracker" version="0.0.2" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
     <name>atalandaGPSTracker</name>
     <description>Cordova plugin for fore- and background GPS tracking</description>
     <license>MIT</license>
 
     <engines>
-      <engine name="cordova" version=">=3.4.0" />
+      <engine name="cordova" version=">=4.3.0" />
     </engines>
 
     <js-module name="atalandaGPSTracker" src="www/atalandaGPSTracker.js">
