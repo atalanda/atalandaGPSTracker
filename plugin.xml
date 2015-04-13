@@ -5,7 +5,7 @@
     <license>MIT</license>
 
     <engines>
-      <engine name="cordova" version=">=4.3.0" />
+      <engine name="cordova" version=">=3.8.0" />
     </engines>
 
     <js-module name="atalandaGPSTracker" src="www/atalandaGPSTracker.js">
