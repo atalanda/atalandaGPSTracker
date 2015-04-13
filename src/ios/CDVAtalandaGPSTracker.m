@@ -16,6 +16,8 @@
     CLLocationManager *locationManager;
     BOOL configSet;
     NSString *url;
+    NSString *additionalHeaderKey;
+    NSString *additionalHeaderValue;
     NSDictionary *params; // additional params that can change on each startTracking and are sent with every POST request
     // counter to first get high accuracy results
     NSInteger receivedLocationUpdates;
@@ -57,6 +59,9 @@
 
     // read and store additional params from javascript object
     params = [command.arguments objectAtIndex:0];
+
+    additionalHeaderKey = params[@"additionalHeader"][@"key"];
+    additionalHeaderValue = params[@"additionalHeader"][@"value"];
 
     // start monitoring battery
     [[UIDevice currentDevice] setBatteryMonitoringEnabled:YES];
@@ -177,6 +182,7 @@
     NSMutableURLRequest *postRequest = [NSMutableURLRequest requestWithURL: [NSURL URLWithString:url]];
     postRequest.HTTPMethod = @"POST";
     [postRequest setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    [postRequest setValue:additionalHeaderValue forHTTPHeaderField:additionalHeaderKey];
     postRequest.HTTPBody = [jsonString dataUsingEncoding: NSUTF8StringEncoding];
     [NSURLConnection sendAsynchronousRequest:postRequest queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
@@ -184,8 +190,8 @@
                                  NSLog(@"Httperror: %@, %d", error.localizedDescription, error.code);
                                } else {
                                   NSInteger responseCode = [(NSHTTPURLResponse *)response statusCode];
-                                  NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                                  NSLog(@"REQUEST SENT TO SERVER! HTTP response code: %d; response body: %@", responseCode, responseString);
+                                  //NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                                  NSLog(@"REQUEST SENT TO SERVER! HTTP response code: %d", responseCode);
                                }
                            }];
 }

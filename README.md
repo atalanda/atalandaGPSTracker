@@ -27,6 +27,17 @@ window.plugins.atalandaGPSTracker.startTracking();
 window.plugins.atalandaGPSTracker.stopTracking();
 ```
 
+Alternativley, an additional header can be passed to the startTracking() method:
+
+```
+window.plugins.atalandaGPSTracker.startTracking({
+  additionalHeader: {
+    key: "Authorization",
+    value: "bearer your_access_token"
+  }
+});
+```
+
 For every location update, a JSON encoded `POST` request with the following format is made:
 ```
 {
