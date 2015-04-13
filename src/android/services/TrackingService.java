@@ -38,6 +38,8 @@ public class TrackingService extends Service {
 		locationIntent = new Intent(this, LocationReceiver.class);
 		locationIntent.putExtra("parameters", intent.getStringExtra("parameters"));
 		locationIntent.putExtra("url", intent.getStringExtra("url"));
+		locationIntent.putExtra("additionalHeaderKey", intent.getStringExtra("additionalHeaderKey"));
+		locationIntent.putExtra("additionalHeaderValue", intent.getStringExtra("additionalHeaderValue"));
 		locationReceiverPendingIntent = PendingIntent.getBroadcast(this, 0, locationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 		Criteria criteria = new Criteria();

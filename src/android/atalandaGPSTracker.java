@@ -31,23 +31,24 @@ public class atalandaGPSTracker extends CordovaPlugin {
       Boolean result = false;
 
       if(action.equals("startTracking")) {
-      if(url.equals("")) {
-      callbackContext.error("Tracking URL endpoint not configured. Please call configure first");
-      return false;
-      }
-      try {
-      JSONObject parameters = data.getJSONObject(0);
-      trackingServiceIntent.putExtra("parameters", parameters.toString());
-      trackingServiceIntent.putExtra("url", url);
-      trackingServiceIntent.putExtra("additionalHeaderKey", additionalHeaderKey);
-      trackingServiceIntent.putExtra("additionalHeaderValue", additionalHeaderValue);
-      activity.startService(trackingServiceIntent);
-          callbackContext.success();
-          result = true;
-    } catch (JSONException e) {
-      result = false;
-      callbackContext.error("Error: " + e.getMessage());
-    }
+          if(url.equals("")) {
+            callbackContext.error("Tracking URL endpoint not configured. Please call configure first");
+            return false;
+          }
+          try {
+            JSONObject parameters = data.getJSONObject(0);
+            trackingServiceIntent.putExtra("parameters", parameters.toString());
+
+            trackingServiceIntent.putExtra("url", url);
+            trackingServiceIntent.putExtra("additionalHeaderKey", additionalHeaderKey);
+            trackingServiceIntent.putExtra("additionalHeaderValue", additionalHeaderValue);
+            activity.startService(trackingServiceIntent);
+            callbackContext.success();
+            result = true;
+          } catch (JSONException e) {
+            result = false;
+            callbackContext.error("Error: " + e.getMessage());
+          }
       }
 
       if(action.equals("stopTracking")) {
@@ -62,7 +63,6 @@ public class atalandaGPSTracker extends CordovaPlugin {
           callbackContext.success();
           result = true;
         } catch (JSONException e) {
-          Log.e("error configuring plugin", e.getMessage());
           callbackContext.error("Error: " + e.getMessage());
           result = false;
         }
@@ -75,7 +75,6 @@ public class atalandaGPSTracker extends CordovaPlugin {
           callbackContext.success();
           result = true;
         } catch (JSONException e) {
-          Log.e("error setAdditionalHeader plugin", e.getMessage());
           callbackContext.error("Error: " + e.getMessage());
           result = false;
         }

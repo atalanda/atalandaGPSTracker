@@ -16,7 +16,7 @@ public class LocationCache {
 	private Float batteryLevel;
 	private String timestamp;
 
-	public LocationCache(Location location, String parameters, String url, Float batteryLevel, String additionalHeaderKey, String, additionalHeaderValue) {
+	public LocationCache(Location location, String parameters, String url, Float batteryLevel, String additionalHeaderKey, String additionalHeaderValue) {
 		this.setLocation(location);
 		this.setParameters(parameters);
 		this.setUrl(url);
@@ -57,19 +57,19 @@ public class LocationCache {
 		return batteryLevel;
 	}
 
-	public void setAdditionalHeaderKey(Float additionalHeaderKey) {
+	public void setAdditionalHeaderKey(String additionalHeaderKey) {
 		this.additionalHeaderKey = additionalHeaderKey;
 	}
 
-	public Float getAdditionalHeaderKey() {
+	public String getAdditionalHeaderKey() {
 		return additionalHeaderKey;
 	}
 
-	public void setAdditionalHeaderValue(Float additionalHeaderValue) {
+	public void setAdditionalHeaderValue(String additionalHeaderValue) {
 		this.additionalHeaderValue = additionalHeaderValue;
 	}
 
-	public Float getAdditionalHeaderValue() {
+	public String getAdditionalHeaderValue() {
 		return additionalHeaderValue;
 	}
 
