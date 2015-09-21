@@ -75,8 +75,11 @@ public class LocationUploadTask extends AsyncTask<LocationCache, Integer, Boolea
 
 			    httppost.setEntity(new StringEntity(body.toString()));
 					httppost.addHeader(locationCache.getAdditionalHeaderKey(), locationCache.getAdditionalHeaderValue());
-			} catch (JSONException | UnsupportedEncodingException e) {
-				Log.e("error encoding JSON", e.getMessage());
+			} catch (JSONException e) {
+				Log.e("JSONException: error encoding JSON", e.getMessage());
+				continue;
+			} catch (UnsupportedEncodingException e) {
+				Log.e("UnsupportedEncodingException: error encoding JSON", e.getMessage());
 				continue;
 			}
 
