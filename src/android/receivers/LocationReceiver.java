@@ -21,46 +21,49 @@ import android.util.Pair;
 
 public class LocationReceiver extends BroadcastReceiver {
 
-	protected static ArrayList<LocationCache> locations = new ArrayList<LocationCache>();
+  protected static ArrayList<LocationCache> locations = new ArrayList<LocationCache>();
 
-	@Override
-	public void onReceive(Context context, Intent intent) {
-		// TODO Auto-generated method stub
-		Log.d("Atalanda", "receive");
+  @Override
+  public void onReceive(Context context, Intent intent) {
+    // TODO Auto-generated method stub
+    Log.d("Atalanda", "receive");
 
-		String locationKey = LocationManager.KEY_LOCATION_CHANGED;
+    String locationKey = LocationManager.KEY_LOCATION_CHANGED;
 
-	    if (intent.hasExtra(locationKey)) {
-			Location location = (Location)intent.getExtras().get(locationKey);
-			String parameters = intent.getStringExtra("parameters");
-			String url = intent.getStringExtra("url");
-			String additionalHeaderKey = intent.getStringExtra("additionalHeaderKey");
-			String additionalHeaderValue = intent.getStringExtra("additionalHeaderValue");
-			Float batteryLevel = getBatteryLevel(context.getApplicationContext());
-			locations.add(new LocationCache(location, parameters, url, batteryLevel, additionalHeaderKey, additionalHeaderValue));
-			Log.d("Atalanda", "Got Location Lat: "+location.getLatitude()+" Long: "+location.getLongitude());
+      if (intent.hasExtra(locationKey)) {
+      Location location = (Location)intent.getExtras().get(locationKey);
+      String parameters = intent.getStringExtra("parameters");
+      if(parameters == null) {
+        parameters = "{}";
+      }
+      String url = intent.getStringExtra("url");
+      String additionalHeaderKey = intent.getStringExtra("additionalHeaderKey");
+      String additionalHeaderValue = intent.getStringExtra("additionalHeaderValue");
+      Float batteryLevel = getBatteryLevel(context.getApplicationContext());
+      locations.add(new LocationCache(location, parameters, url, batteryLevel, additionalHeaderKey, additionalHeaderValue));
+      Log.d("Atalanda", "Got Location Lat: "+location.getLatitude()+" Long: "+location.getLongitude());
 
-			ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-			NetworkInfo netInfo = cm.getActiveNetworkInfo();
-			if (netInfo != null && netInfo.isConnected()) {
-			    uploadData();
-			}
-	    }
-	}
+      ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+      NetworkInfo netInfo = cm.getActiveNetworkInfo();
+      if (netInfo != null && netInfo.isConnected()) {
+          uploadData();
+      }
+      }
+  }
 
-	private void uploadData() {
-		LocationCache[] locationEntires = new LocationCache[locations.size()];
-		LocationCache locationEntries[] = locations.toArray(locationEntires);
-		new LocationUploadTask().execute(locationEntries);
-		locations.clear();
-	}
+  private void uploadData() {
+    LocationCache[] locationEntires = new LocationCache[locations.size()];
+    LocationCache locationEntries[] = locations.toArray(locationEntires);
+    new LocationUploadTask().execute(locationEntries);
+    locations.clear();
+  }
 
-	private float getBatteryLevel(Context context) {
-	    Intent batteryIntent =  context.registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
-	    int level = batteryIntent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
-	    int scale = batteryIntent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
+  private float getBatteryLevel(Context context) {
+      Intent batteryIntent =  context.registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+      int level = batteryIntent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
+      int scale = batteryIntent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
 
-	    return ((float)level / (float)scale);
-	}
+      return ((float)level / (float)scale);
+  }
 
 }

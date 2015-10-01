@@ -38,15 +38,15 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class LocationUploadTask extends AsyncTask<LocationCache, Integer, Boolean> {
 
-	@Override
-	protected Boolean doInBackground(LocationCache... cacheEntries) {
-		Log.d("Atalanda", "uploading "+cacheEntries.length+" locations");
-		for (int i = 0; i < cacheEntries.length; i++) {
-			LocationCache locationCache = cacheEntries[i];
-			Location location = locationCache.getLocation();
+  @Override
+  protected Boolean doInBackground(LocationCache... cacheEntries) {
+    Log.d("Atalanda", "uploading "+cacheEntries.length+" locations");
+    for (int i = 0; i < cacheEntries.length; i++) {
+      LocationCache locationCache = cacheEntries[i];
+      Location location = locationCache.getLocation();
 
-			HostnameVerifier hostnameVerifier = org.apache.http.conn.ssl.SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER;
-			HttpClient httpclient = new DefaultHttpClient();
+      HostnameVerifier hostnameVerifier = org.apache.http.conn.ssl.SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER;
+      HttpClient httpclient = new DefaultHttpClient();
 
       SchemeRegistry registry = new SchemeRegistry();
       SSLSocketFactory socketFactory = SSLSocketFactory.getSocketFactory();
@@ -58,47 +58,47 @@ public class LocationUploadTask extends AsyncTask<LocationCache, Integer, Boolea
       // Set verifier
       HttpsURLConnection.setDefaultHostnameVerifier(hostnameVerifier);
 
-	    HttpPost httppost = new HttpPost(locationCache.getUrl());
-			httppost.setHeader("Content-type", "application/json");
+      HttpPost httppost = new HttpPost(locationCache.getUrl());
+      httppost.setHeader("Content-type", "application/json");
 
-	    JSONObject body;
-			try {
-					body = new JSONObject(locationCache.getParameters());
-			    body.put("verticalAccuracy", null);
-			    body.put("horizontalAccuracy", location.getAccuracy());
-			    body.put("heading", location.getBearing());
-					body.put("latitude", location.getLatitude());
-					body.put("longitude", location.getLongitude());
-			    body.put("velocity", location.getSpeed());
-			    body.put("batteryLevel", locationCache.getBatteryLevel());
-			    body.put("timestamp", locationCache.getTimestamp());
+      JSONObject body;
+      try {
+          body = new JSONObject(locationCache.getParameters());
+          body.put("verticalAccuracy", null);
+          body.put("horizontalAccuracy", location.getAccuracy());
+          body.put("heading", location.getBearing());
+          body.put("latitude", location.getLatitude());
+          body.put("longitude", location.getLongitude());
+          body.put("velocity", location.getSpeed());
+          body.put("batteryLevel", locationCache.getBatteryLevel());
+          body.put("timestamp", locationCache.getTimestamp());
 
-			    httppost.setEntity(new StringEntity(body.toString()));
-					httppost.addHeader(locationCache.getAdditionalHeaderKey(), locationCache.getAdditionalHeaderValue());
+          httppost.setEntity(new StringEntity(body.toString()));
+          httppost.addHeader(locationCache.getAdditionalHeaderKey(), locationCache.getAdditionalHeaderValue());
 			} catch (JSONException e) {
-				Log.e("JSONException: error encoding JSON", e.getMessage());
+				Log.e("JSONException", e.getMessage());
 				continue;
 			} catch (UnsupportedEncodingException e) {
-				Log.e("UnsupportedEncodingException: error encoding JSON", e.getMessage());
+				Log.e("UnsupportedEncodingExcp", e.getMessage());
 				continue;
 			}
 
-		    Log.d("uploading position", "to "+locationCache.getUrl());
+        Log.d("uploading position", "to "+locationCache.getUrl());
 
-		    try {
-		        // Execute HTTP Post Request
-		        HttpResponse response = httpclient.execute(httppost);
-		        Log.d("upload response code", response.getStatusLine().toString());
-		    } catch (ClientProtocolException e) {
-		        // TODO Auto-generated catch block
-		    	Log.e("upload failed", e.getLocalizedMessage());
-		    } catch (IOException e) {
-		        // TODO Auto-generated catch block
-		    	Log.e("upload failed", e.getLocalizedMessage());
-		    }
+        try {
+            // Execute HTTP Post Request
+            HttpResponse response = httpclient.execute(httppost);
+            Log.d("upload response code", response.getStatusLine().toString());
+        } catch (ClientProtocolException e) {
+            // TODO Auto-generated catch block
+          Log.e("upload failed", e.getLocalizedMessage());
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+          Log.e("upload failed", e.getLocalizedMessage());
+        }
 
-		}
+    }
 
-		return true;
-	}
+    return true;
+  }
 }

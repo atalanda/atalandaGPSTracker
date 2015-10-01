@@ -13,6 +13,7 @@ module.exports = {
       [params]);
   },
   startTracking: function(params, success, error) {
+    params = params || {}; // default params to empty object {}
     exec(success, error,
       'atalandaGPSTracker',
       'startTracking',
