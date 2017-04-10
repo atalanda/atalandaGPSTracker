@@ -6,7 +6,7 @@
 
 #import <CoreLocation/CoreLocation.h>
 #import "CDVAtalandaGPSTracker.h"
-#import <Cordova/CDVJSON.h>
+#import <Cordova/CDVPlugin.h>
 
 #define maxAgeOfPosition 5.0
 #define minHighAccuracyResults 5
