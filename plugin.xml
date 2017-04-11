@@ -5,7 +5,7 @@
     <license>MIT</license>
 
     <engines>
-      <engine name="cordova" version=">=3.7.1" />
+      <engine name="cordova" version=">=6.5.0" />
     </engines>
 
     <js-module name="atalandaGPSTracker" src="www/atalandaGPSTracker.js">
@@ -64,5 +64,7 @@
             <param name="onload" value="true" />
           </feature>
         </config-file>
+        <framework src="src/android/build-extras.gradle" custom="true" type="gradleReference" />
      </platform>
 </plugin>
+
