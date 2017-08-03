@@ -1,0 +1,23 @@
+{
+  "name": "atalanda-gps-tracker",
+  "version": "0.0.3",
+  "description": "atalanda gps tracker",
+  "main": "www/atalandaGPSTracker.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atalanda/atalandaGPSTracker.git"
+  },
+  "keywords": [
+    "gps",
+    "tracker"
+  ],
+  "author": "Hubert Hoelzl",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/atalanda/atalandaGPSTracker/issues"
+  },
+  "homepage": "https://github.com/atalanda/atalandaGPSTracker#readme"
+}
