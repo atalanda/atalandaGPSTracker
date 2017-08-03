@@ -115,6 +115,8 @@
 {
     if(status == kCLAuthorizationStatusAuthorized) {
         NSLog(@"User authorized use of location!");
+    } else if(status == kCLAuthorizationStatusAuthorizedWhenInUse) {
+        NSLog(@"User authroized use of location, WHEN IN USE!");
     } else if(status == kCLAuthorizationStatusNotDetermined) {
         NSLog(@"Location authorization pending!");
     } else {
@@ -159,8 +161,12 @@
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
-    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied){
+    CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
+
+    if (status == kCLAuthorizationStatusDenied) {
         NSLog(@"User has denied location services");
+    } else if (status == kCLAuthorizationStatusAuthorizedWhenInUse) {
+        NSLog(@"User has granted location services only WHEN IN USE!");
     } else {
         NSLog(@"Location manager did fail with error: %@", error.localizedFailureReason);
     }
